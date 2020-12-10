@@ -1,8 +1,7 @@
 const events = [
   'monetizationstart',
   'monetizationstop',
-  'monetizationpending',
-  'tip'
+  'monetizationpending'
   // Don't log these events
   // 'monetizationprogress'
 ]
