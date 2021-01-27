@@ -84,9 +84,15 @@ export class DocumentMonetization {
           this.window.location.origin
         )
       }
-      if (this.request && (state === 'stopped' || state === 'pending')) {
+      if (this.request) {
+        const mapping = {
+          pending: 'monetizationpending',
+          stopped: 'monetizationstop',
+          started: 'monetizationstart'
+        } as const
+
         this.postMonetizationMessage(
-          state === 'pending' ? 'monetizationpending' : 'monetizationstop',
+          mapping[state],
           {
             paymentPointer: this.request.paymentPointer,
             requestId: this.request.requestId
@@ -99,15 +105,10 @@ export class DocumentMonetization {
   }
 
   postMonetizationStartWindowMessageAndSetMonetizationState(
-    detail: MonetizationStartEvent['detail']
+    _: MonetizationStartEvent['detail']
   ) {
     // Indicate that payment has started.
-    const changed = this.setState({ state: 'started' })
-    if (!changed) {
-      throw new Error(`expecting state transition`)
-    }
-    // First nonzero packet has been fulfilled
-    this.postMonetizationMessage('monetizationstart', detail)
+    this.setState({ state: 'started' })
   }
 
   postMonetizationMessage(
