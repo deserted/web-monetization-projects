@@ -104,13 +104,6 @@ export class DocumentMonetization {
     return changed
   }
 
-  postMonetizationStartWindowMessageAndSetMonetizationState(
-    _: MonetizationStartEvent['detail']
-  ) {
-    // Indicate that payment has started.
-    this.setState({ state: 'started' })
-  }
-
   postMonetizationMessage(
     type: MonetizationEvent['type'],
     detailSource: MonetizationEvent['detail'],

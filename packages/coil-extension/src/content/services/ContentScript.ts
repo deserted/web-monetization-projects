@@ -146,9 +146,8 @@ export class ContentScript {
           this.monetization.postMonetizationProgressWindowMessage(detail)
         } else if (request.command === 'monetizationStart') {
           debug('monetizationStart event')
-          this.monetization.postMonetizationStartWindowMessageAndSetMonetizationState(
-            request.data
-          )
+          // Indicate that payment has started.
+          this.monetization.setState({ state: 'started' })
         } else if (request.command === 'checkIFrameIsAllowedFromBackground') {
           this.frames
             .checkIfIframeIsAllowedFromBackground(request.data.frame)
